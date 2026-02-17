@@ -11,7 +11,7 @@ def human_approval(**context):
     print("Approved!")
 
 with DAG(
-    "human_in_the_loop_dag",
+    dag_id="human_in_the_loop_dag",
     start_date=days_ago(1),
     schedule=None,
     catchup=False,
@@ -22,7 +22,6 @@ with DAG(
     approval = PythonOperator(
         task_id="wait_for_approval",
         python_callable=human_approval,
-        provide_context=True,
     )
 
     end = EmptyOperator(task_id="end")
